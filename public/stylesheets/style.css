@@ -1,8 +1,27 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.searchBar {
+  display: block;
+  width: 400px !important;
+  height: 45px;
+  transition: width 1s;
+}
+
+.searchBar:focus {
+  width: 600px !important;
+}
+
+.form-control:focus {
+  border-color:	#B7B7B7;
+  box-shadow: 0 0 0 0.2rem #FFF;
 }
 
 a {
   color: #00B7FF;
+}
+
+.logo {
+  height: 50px;
 }
