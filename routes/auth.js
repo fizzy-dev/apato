@@ -2,11 +2,19 @@ const express = require('express');
 const authRouter = express.Router();
 
 const {
+    passport
+} = require('../middlewares');
+
+const {
     authController
-} = require('../controllers')
+} = require('../controllers');
 
 /* GET users listing. */
 authRouter.route('/login')
-.get(authController.getLogin);
+.post(passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
 
 module.exports = authRouter;
