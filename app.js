@@ -10,7 +10,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -24,5 +24,9 @@ app.use(indexRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+app.get('/', (req, res, next) => {
+  return res.render('home');
+})
 
 module.exports = app;

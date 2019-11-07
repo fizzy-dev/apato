@@ -1,0 +1,13 @@
+{
+    "development": {
+        "database": {
+            "host": "localhost",
+            "user": "root",
+            "password": "12345678",
+            "name": "apato"
+        },
+        "jwt": {
+            "JWT_SECRET": "iloveass2"
+        }
+    }
+}
