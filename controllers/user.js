@@ -37,6 +37,33 @@ const createUser = async (req, res, next) => {
     }
 }
 
+const createSession = async (req, res, next) => {
+    try {
+        return res.json({
+            status: 'success',
+            msg: 'Session generated'
+        });
+    } catch (e) {
+        console.log(e.message);
+        next(createError(500, 'Unexpected Error'));
+    }
+}
+
+const destroySession = async (req, res, next) => {
+    try {
+        req.logout();
+        return res.json({
+            status: 'success',
+            msg: 'Session terminated'
+        });
+    } catch (e) {
+        console.log(e.message);
+        next(createError(500, 'Unexpected Error'));
+    }
+}
+
 module.exports = {
-    createUser
+    createUser,
+    createSession,
+    destroySession
 }

@@ -33,4 +33,42 @@
             }
         });
     });
+    $("#signInForm").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/api/v1/users/sessions',
+            type: 'post',
+            data: {
+                email: $("#signInEmail").val(),
+                password: $("#signInPassword").val()
+            },
+            beforeSend: function () {
+                $("#signInLoader").show();
+            },
+            success: function (res) {
+                $("#signInLoader").hide();
+                $("#signInModal").modal('hide');
+                window.location.replace('/');
+            },
+            error: function (xhr) {
+                $("#signInLoader").hide();
+            }
+        });
+    });
+    function logout() {
+        $.ajax({
+            url: '/api/v1/users/sessions',
+            type: 'delete',
+            beforeSend: function () {
+                $("#signOutLoader").show();
+            },
+            success: function (res) {
+                $("#signOutLoader").hide();
+                window.location.replace('/');
+            },
+            error: function (xhr) {
+                $("#signOutLoader").hide();
+            }
+        });
+    }
 </script>
