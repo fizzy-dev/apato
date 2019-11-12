@@ -3,12 +3,14 @@ const indexRouter = express.Router();
 
 const userRouter = require('./users');
 const authRouter = require('./auth');
+const apiRouter = require('./apis');
 
 indexRouter.route('/')
 .get(async (req, res, next) => {
     return res.render('pages/index');
 });
 
+indexRouter.use('/api', apiRouter);
 indexRouter.use('/auth', authRouter);
 indexRouter.use('/users', userRouter);
 
