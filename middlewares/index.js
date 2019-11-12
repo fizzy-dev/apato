@@ -1,5 +1,8 @@
 const passport = require('./passport');
-const errorHandler = require('./errorHandler');
+const {
+    errorHandler,
+    apiErrorHandler
+} = require('./error');
 const {
     checkAdminAuthorization,
     checkUserAuthorization
@@ -8,6 +11,7 @@ const {
 module.exports = {
     passport,
     errorHandler,
+    apiErrorHandler,
     checkAdminAuthorization,
     checkUserAuthorization
 }

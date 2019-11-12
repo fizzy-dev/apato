@@ -13,12 +13,12 @@ const {
 
 passport.use(new LocalStrategy(
     {
-        usernameField: 'username',
+        usernameField: 'email',
         passwordField: 'password'
     },
-    async function (username, password, done) {
+    async function (email, password, done) {
         try {
-            let user = await User.getUserByUsername(username);     
+            let user = await User.getUserByEmail(email);     
             if (!user[0]) {
                 return done(null, false);
             }

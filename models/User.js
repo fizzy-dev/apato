@@ -2,7 +2,7 @@ const database = require('./database');
 
 class User {
     constructor(user) {
-        this.username = user.username;
+        this.email = user.email;
         this.password = user.password;
         this.isAdmin = user.isAdmin;
     }
@@ -12,8 +12,8 @@ class User {
 
     save() {
         return new Promise((resolve, reject) => {
-            database.query('INSERT INTO User(username, password, isAdmin) VALUES(?,?,?)',
-            [this.username, this.password, this.isAdmin], function(err, result) {
+            database.query('INSERT INTO User(email, password, isAdmin) VALUES(?,?,?)',
+            [this.email, this.password, this.isAdmin], function(err, result) {
                 if (err) {
                     reject(err);
                 } else {
@@ -23,9 +23,9 @@ class User {
         });
     }
 
-    static getUserByUsername(username) {
+    static getUserByEmail(email) {
         return new Promise((resolve, reject) => {
-            database.query('SELECT * FROM User WHERE username = ?', [username], function(err, result) {
+            database.query('SELECT * FROM User WHERE email = ?', [email], function(err, result) {
                 if (err) {
                     reject(err);
                 } else {
