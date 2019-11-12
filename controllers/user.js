@@ -14,17 +14,17 @@ const createUser = async (req, res, next) => {
             email,
             password,
             isAdmin
-        } = req.body;
+        } = req.body
 
-        console.log(email+' '+password+' '+password.length);
-
+        // Kiểm tra email dùng chưa
+        let existingEmail = await User.getUserByEmail(email);
+        if (existingEmail[0]) return next(createError(409, 'Email is already used'));
+        // Hash mật khẩu
         let hashedPassword = await genHash(password);
-
-        console.log(hashedPassword.length);
-
+        // Tạo user mới
         let user = new User({ email, password: hashedPassword, isAdmin });
         await user.save();
-
+        // Trả về json
         return res.json({
             status: 'success',
             data: {

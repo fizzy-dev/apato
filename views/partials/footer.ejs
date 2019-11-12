@@ -26,6 +26,7 @@
             success: function (res) {
                 $("#signUpLoader").hide();
                 $("#signUpModal").modal('hide');
+                $("#successModal").modal('show');
             },
             error: function (xhr) {
                 $("#signUpLoader").hide();
