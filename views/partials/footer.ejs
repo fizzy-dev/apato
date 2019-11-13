@@ -18,6 +18,8 @@
             data: {
                 email: $("#signUpEmail").val(),
                 password: $("#signUpPassword").val(),
+                firstName: $("#signUpFirstName").val(),
+                lastName: $("#signUpLastName").val(),
                 isAdmin: 0
             },
             beforeSend: function () {
@@ -48,7 +50,7 @@
             success: function (res) {
                 $("#signInLoader").hide();
                 $("#signInModal").modal('hide');
-                window.location.replace('/');
+                window.location.reload();
             },
             error: function (xhr) {
                 $("#signInLoader").hide();

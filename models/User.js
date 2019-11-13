@@ -5,6 +5,8 @@ class User {
         this.email = user.email;
         this.password = user.password;
         this.isAdmin = user.isAdmin;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
     }
 
     validate() {
@@ -12,8 +14,8 @@ class User {
 
     save() {
         return new Promise((resolve, reject) => {
-            database.query('INSERT INTO User(email, password, isAdmin) VALUES(?,?,?)',
-            [this.email, this.password, this.isAdmin], function(err, result) {
+            database.query('INSERT INTO User(email, password, isAdmin, firstName, lastName) VALUES(?,?,?,?,?)',
+            [this.email, this.password, this.isAdmin, this.firstName, this.lastName], function(err, result) {
                 if (err) {
                     reject(err);
                 } else {

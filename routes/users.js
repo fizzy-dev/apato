@@ -10,8 +10,6 @@ const {
 } = require('../controllers');
 
 /* GET users listing. */
-userRouter.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+userRouter.get('/:id', userController.renderUser);
 
 module.exports = userRouter;

@@ -8,13 +8,15 @@ const {
     User
 } = require('../models');
 
+// API
+
 const createUser = async (req, res, next) => {
     try {
         let {
-            email,
-            password,
+            email, password,
+            firstName, lastName,
             isAdmin
-        } = req.body
+        } = req.body;
 
         // Kiểm tra email dùng chưa
         let existingEmail = await User.getUserByEmail(email);
@@ -22,7 +24,7 @@ const createUser = async (req, res, next) => {
         // Hash mật khẩu
         let hashedPassword = await genHash(password);
         // Tạo user mới
-        let user = new User({ email, password: hashedPassword, isAdmin });
+        let user = new User({ email, password: hashedPassword, isAdmin, firstName, lastName });
         await user.save();
         // Trả về json
         return res.json({
@@ -62,8 +64,25 @@ const destroySession = async (req, res, next) => {
     }
 }
 
+// Rendering
+
+const renderUser = async (req, res, next) => {
+    let { id } = req.params;
+    let user = await User.getUserById(id);
+    if (req.isAuthenticated()) {
+        return res.render('pages/user', {
+            currentUser: req.user,
+            user: user[0]
+        });
+    }
+    return res.render('pages/user', {
+        user: user[0]
+    });
+}
+
 module.exports = {
     createUser,
     createSession,
-    destroySession
+    destroySession,
+    renderUser
 }

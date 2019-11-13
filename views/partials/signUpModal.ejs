@@ -11,6 +11,16 @@
       </div>
       <form id="signUpForm">
         <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="signUpLastName">Họ</label>
+              <input type="text" class="form-control" id="signUpLastName" placeholder="Nhập họ" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="signUpFirstName">Tên</label>
+              <input type="text" class="form-control" id="signUpFirstName" placeholder="Nhập tên và đệm" required>
+            </div>
+          </div>
           <div class="form-group">
             <label for="signUpEmail">Địa chỉ email</label>
             <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp"
@@ -19,7 +29,8 @@
           </div>
           <div class="form-group">
             <label for="signUpPassword">Mật khẩu</label>
-            <input type="password" class="form-control" id="signUpPassword" placeholder="Nhập mật khẩu" required>
+            <input type="password" class="form-control" id="signUpPassword" placeholder="Nhập mật khẩu" minlength="6"
+              required>
             <small id="passwordHelp" class="form-text text-muted">Độ dài lớn hơn 6 kí tự.</small>
           </div>
           <div class="form-group">
