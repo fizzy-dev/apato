@@ -13,6 +13,7 @@
 
             <!-- Search bar start -->
             <form class="form-inline my-2 my-lg-0">
+                <i class="input-icon fa fa-search"></i>
                 <input class="form-control mr-sm-2 shadow-sm search-bar" type="search" placeholder="Tìm kiếm"
                     aria-label="Search">
             </form>
@@ -32,14 +33,14 @@
                 </li>
                 <% } else { %>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=user.email %></a>
-                    <div class="dropdown-menu" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Thông tin cá nhân</a>
-                        <a class="dropdown-item" href="#">Tài khoản</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" onclick="logout()">Đăng xuất</a>
-                        <div class="loader hidden" id="signUpLoader"></div>
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"><%=user.email %></a>
+                    <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="userDropdown">
+                        <div class="apt-dropdown-items-container">
+                            <a class="apt-dropdown-item" href="#">Thông tin cá nhân</a>
+                            <a class="apt-dropdown-item" href="#">Tài khoản</a>
+                            <a class="apt-dropdown-item" href="#" onclick="logout()">Đăng xuất</a>
+                        </div>
                     </div>
                 </li>
                 <% } %>

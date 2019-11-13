@@ -1,5 +1,5 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Montserrat", Helvetica, Arial, sans-serif;
   color: #484848;
 }
 
@@ -7,11 +7,15 @@ body {
   display: block;
   width: 30vw !important;
   height: 45px;
-  transition: width 500ms;
+  transition: width 300ms;
+  border-width: 0.5px !important;
+  border-color: #EAEAEA;
+  font-weight: 600;
+  padding-left: 45px;
 }
 
 .search-bar:focus {
-  width: 50vw !important;
+  width: 45vw !important;
 }
 
 .form-control:focus {
@@ -33,7 +37,8 @@ body {
 }
 
 a {
-  color: #464646 !important;
+  color: #484848 !important;
+  text-decoration: none !important;
 }
 
 .logo {
@@ -88,6 +93,40 @@ a {
   100% { transform: rotate(360deg); }
 }
 
-.dropdown-item:focus {
-  background-color: #777777;
+.dropdown-menu {
+  border-color: #EAEAEA;
+  width: 250px;
+  padding: 0;
+}
+
+.apt-dropdown-items-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.apt-dropdown-item {
+  display: flex;
+  font-size: 14px;
+  color: #777777 !important;
+  height: 50px;
+  border-bottom: solid 1px #EAEAEA;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.apt-dropdown-item:hover {
+  border-bottom-color: #777777;
+}
+
+.nav-link {
+  font-weight: 500;
+}
+
+.input-icon {
+  position: absolute;
+  margin-left: 15px;
+  font-size: 18px;
 }
