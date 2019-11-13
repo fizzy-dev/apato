@@ -9,13 +9,16 @@ body {
   height: 45px;
   transition: width 300ms;
   border-width: 0.5px !important;
-  border-color: #EAEAEA;
   font-weight: 600;
   padding-left: 45px;
 }
 
 .search-bar:focus {
   width: 45vw !important;
+}
+
+.form-control {
+  border-color: #EAEAEA;
 }
 
 .form-control:focus {
@@ -129,4 +132,9 @@ a {
   position: absolute;
   margin-left: 15px;
   font-size: 18px;
+}
+
+.card-img-top {
+  width: 200px;
+  margin: auto;
 }

@@ -8,7 +8,7 @@ const apiRouter = require('./apis');
 indexRouter.route('/')
 .get(async (req, res, next) => {
     if (req.isAuthenticated()) {
-        return res.render('pages/index', { user: req.user });
+        return res.render('pages/index', { currentUser: req.user });
     }
     return res.render('pages/index');
 });
