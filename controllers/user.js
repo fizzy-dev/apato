@@ -8,7 +8,7 @@ const {
     User
 } = require('../models');
 
-// API
+// APIs
 
 const createUser = async (req, res, next) => {
     try {
