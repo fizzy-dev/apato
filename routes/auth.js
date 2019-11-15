@@ -10,11 +10,5 @@ const {
 } = require('../controllers');
 
 /* GET users listing. */
-authRouter.route('/login')
-.post(passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
 
 module.exports = authRouter;

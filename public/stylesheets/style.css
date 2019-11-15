@@ -134,7 +134,34 @@ a {
   font-size: 18px;
 }
 
-.card-img-top {
-  width: 200px;
+.apt-vert-img {
+  width: 100%;
   margin: auto;
+  height: 180px;
+}
+
+.apt-hor-img {
+  height: 100%;
+  width: 300px;
+}
+
+.apt-vert-card {
+  width: 300px !important;
+  border: none;
+}
+
+.apt-hor-card {
+  display: flex;
+  flex-direction: row;
+  height: 200px;
+  border: none;
+}
+
+.list-group-item {
+  border: none;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
 }

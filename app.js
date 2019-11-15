@@ -31,7 +31,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 1000 * 60 * 5
+    maxAge: false
   }
 }));
 app.use(passport.initialize());
