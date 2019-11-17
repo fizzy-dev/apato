@@ -20,11 +20,7 @@ class User {
                 if (err) {
                     reject(err);
                 } else {
-                    if (result[0]) {
-                        resolve(new User(result[0]));
-                    } else {
-                        resolve(null);
-                    }
+                    resolve(result);
                 }
             });
         });
@@ -37,11 +33,7 @@ class User {
                 if (err) {
                     reject(err);
                 } else {
-                    if (result[0]) {
-                        resolve(new User(result[0]));
-                    } else {
-                        resolve(null);
-                    }
+                    resolve(result);
                 }
             }
             )
@@ -54,11 +46,7 @@ class User {
                 if (err) {
                     reject(err);
                 } else {
-                    if (result[0]) {
-                        resolve(new User(result[0]));
-                    } else {
-                        resolve(null);
-                    }
+                    resolve(result);
                 }
             });
         })
@@ -70,11 +58,7 @@ class User {
                 if (err) {
                     reject(err);
                 } else {
-                    if (result[0]) {
-                        resolve(new User(result[0]));
-                    } else {
-                        resolve(null);
-                    }
+                    resolve(result);
                 }
             });
         })
