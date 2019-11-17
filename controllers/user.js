@@ -47,9 +47,11 @@ const updateUser = async (req, res, next) => {
             id
         } = req.body;
         let user = await User.getUserById(id);
-        if (!user) {
+        if (!user[0]) {
             next(createError(404, 'User not found'));
         }
+        user = new User(user[0]);
+        console.log(user);
         user.profilePicture = profilePicture;
         user.firstName = firstName;
         await user.update();
