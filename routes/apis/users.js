@@ -9,7 +9,8 @@ const {
 } = require('../../controllers');
 
 apiUserRouter.route('/')
-.post(userController.createUser);
+.post(userController.createUser)
+.put(userController.updateUser);
 
 apiUserRouter.route('/sessions')
 .post(passport.authenticate('local'), userController.createSession)

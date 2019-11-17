@@ -7,6 +7,7 @@ class User {
         this.isAdmin = user.isAdmin;
         this.firstName = user.firstName;
         this.lastName = user.lastName;
+        this.profilePicture = user.profilePicture;
     }
 
     validate() {
@@ -19,9 +20,31 @@ class User {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    if (result[0]) {
+                        resolve(new User(result[0]));
+                    } else {
+                        resolve(null);
+                    }
                 }
             });
+        });
+    }
+
+    update() {
+        return new Promise((resolve, reject) => {
+            database.query('UPDATE User SET email = ?, password = ?, isAdmin = ?, firstName = ?, lastName = ?, profilePicture = ?',
+            [this.email, this.password, this.isAdmin, this.firstName, this.lastName, this.profilePicture], function (err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (result[0]) {
+                        resolve(new User(result[0]));
+                    } else {
+                        resolve(null);
+                    }
+                }
+            }
+            )
         });
     }
 
@@ -31,7 +54,11 @@ class User {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    if (result[0]) {
+                        resolve(new User(result[0]));
+                    } else {
+                        resolve(null);
+                    }
                 }
             });
         })
@@ -43,23 +70,16 @@ class User {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    if (result[0]) {
+                        resolve(new User(result[0]));
+                    } else {
+                        resolve(null);
+                    }
                 }
             });
         })
     }
 
-    static getUsers(offset, limit) {
-        return new Promise((resolve, reject) => {
-            database.query('SELECT * FROM user LIMIT ?, ?',[offset, limit], function(err, result) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        });
-    }
 }
 
 module.exports = User;

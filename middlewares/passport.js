@@ -6,7 +6,7 @@ const {
 } = require('../models');
 
 const {
-    compareHash
+    bcrypt
 } = require('../utils');
 
 
@@ -21,7 +21,7 @@ passport.use(new LocalStrategy(
             if (!user[0]) {
                 return done(null, false);
             }
-            let correctPassword = await compareHash(password, user[0].password);
+            let correctPassword = await bcrypt.compareHash(password, user[0].password);
             if (!correctPassword) {
                 return done(null, false);
             }

@@ -54,6 +54,7 @@ const renderApartments = async (req, res, next) => {
 
 module.exports = {
     getApartments,
+    createApartments,
     renderApartments,
     renderApartment
 }

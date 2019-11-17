@@ -1,9 +1,7 @@
-const {
-    genHash,
-    compareHash
-} = require('./bcrypt');
+const bcrypt = require('./bcrypt');
+const crypto = require('./crypto');
 
 module.exports = {
-    genHash,
-    compareHash
+    bcrypt,
+    crypto
 }

@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 
 const {
-    genHash
+    bcrypt
 } = require('../utils');
 
 const {
@@ -22,7 +22,7 @@ const createUser = async (req, res, next) => {
         let existingEmail = await User.getUserByEmail(email);
         if (existingEmail[0]) return next(createError(409, 'Email is already used'));
         // Hash mật khẩu
-        let hashedPassword = await genHash(password);
+        let hashedPassword = await bcrypt.genHash(password);
         // Tạo user mới
         let user = new User({ email, password: hashedPassword, isAdmin, firstName, lastName });
         await user.save();
@@ -35,7 +35,32 @@ const createUser = async (req, res, next) => {
         });
     } catch (e) {
         console.log(e.message);
-        next(createError(500, 'Unexpected Error'));
+        next(createError(500, 'Unexpected error'));
+    }
+}
+
+const updateUser = async (req, res, next) => {
+    try {
+        let {
+            profilePicture,
+            firstName,
+            id
+        } = req.body;
+        let user = await User.getUserById(id);
+        if (!user) {
+            next(createError(404, 'User not found'));
+        }
+        user.profilePicture = profilePicture;
+        user.firstName = firstName;
+        await user.update();
+
+        return res.json({
+            status: 'success',
+            msg: 'Update user successful'
+        });
+    } catch (e) {
+        console.log(e.message);
+        next(createError(500, 'Unexpected error'));
     }
 }
 
@@ -47,7 +72,7 @@ const createSession = async (req, res, next) => {
         });
     } catch (e) {
         console.log(e.message);
-        next(createError(500, 'Unexpected Error'));
+        next(createError(500, 'Unexpected error'));
     }
 }
 
@@ -60,7 +85,7 @@ const destroySession = async (req, res, next) => {
         });
     } catch (e) {
         console.log(e.message);
-        next(createError(500, 'Unexpected Error'));
+        next(createError(500, 'Unexpected error'));
     }
 }
 
@@ -82,6 +107,7 @@ const renderUser = async (req, res, next) => {
 
 module.exports = {
     createUser,
+    updateUser,
     createSession,
     destroySession,
     renderUser

@@ -3,7 +3,6 @@ const indexRouter = express.Router();
 
 const userRouter = require('./users');
 const apartmentRouter = require('./apartments');
-const authRouter = require('./auth');
 const apiRouter = require('./apis');
 
 indexRouter.route('/')
@@ -15,7 +14,6 @@ indexRouter.route('/')
 });
 
 indexRouter.use('/api', apiRouter);
-indexRouter.use('/auth', authRouter);
 indexRouter.use('/users', userRouter);
 indexRouter.use('/apartments', apartmentRouter);
 
