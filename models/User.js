@@ -2,6 +2,7 @@ const database = require('./database');
 
 class User {
     constructor(user) {
+        this.id = user.id;
         this.email = user.email;
         this.password = user.password;
         this.isAdmin = user.isAdmin;
@@ -28,8 +29,8 @@ class User {
 
     update() {
         return new Promise((resolve, reject) => {
-            database.query('UPDATE User SET email = ?, password = ?, isAdmin = ?, firstName = ?, lastName = ?, profilePicture = ?',
-            [this.email, this.password, this.isAdmin, this.firstName, this.lastName, this.profilePicture], function (err, result) {
+            database.query('UPDATE User SET email = ?, password = ?, isAdmin = ?, firstName = ?, lastName = ?, profilePicture = ? WHERE id = ?',
+            [this.email, this.password, this.isAdmin, this.firstName, this.lastName, this.profilePicture, this.id], function (err, result) {
                 if (err) {
                     reject(err);
                 } else {

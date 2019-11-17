@@ -8,42 +8,52 @@
 <body>
     <%- include('../partials/header'); -%>
 
-    <div class="container" style="margin-top: 50px;">
-        <h5>Có 3 kết quả tìm kiếm</h5>
-        <ul class="list-group">
-            <li class="list-group-item">
-                <div class="card apt-hor-card">
-                    <img class="apt-hor-img" src="/images/sample1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Apartment name</h5>
-                        <p class="card-text">Some content.</p>
-                    </div>
-                </div>
-            </li>
-            <hr class="my-1">
-            <li class="list-group-item">
-                <div class="card apt-hor-card">
-                    <img class="apt-hor-img" src="/images/sample1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Apartment name</h5>
-                        <p class="card-text">Some content.</p>
-                    </div>
-                </div>
-            </li>
-            <hr class="my-1">
-            <li class="list-group-item">
-                <div class="card apt-hor-card">
-                    <img class="apt-hor-img" src="/images/sample1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Apartment name</h5>
-                        <p class="card-text">Some content.</p>
-                    </div>
-                </div>
-            </li>
+    <div id="searchResults" class="container hidden" style="margin-top: 50px;">
+        <h5 id="resultCount"></h5>
+        <ul id="resultList" class="list-group">
         </ul>
     </div>
+    <div id="resultLoader" class="hidden" style="display: flex; align-items: center; justify-content: center; padding: 200px;">
+        <div class="loader" style="width: 100px; height: 100px;">
+        </div>
+    </div>
+
     </div>
     <%- include('../partials/footer'); -%>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: `/api/v1/apartments?keyword=<%=keyword%>&limit=<%=limit%>&page=<%=page%>`,
+                type: 'get',
+                beforeSend: function () {
+                    $("#resultLoader").show();
+                    $("#searchResults").hide();
+                },
+                success: function (res) {
+                    console.log(res.data.apartments);
+                    $("#resultCount").append(`Có ${res.data.count} kết quả tìm kiếm`);
+                    res.data.apartments.forEach(apartment => {
+                        $("#resultList").append(`
+                            <li class="list-group-item">
+                                <div class="card apt-hor-card">
+                                    <img class="apt-hor-img" src="${apartment.picture ? apartment.picture : '/images/sample1.jpg'}" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${apartment.name}</h5>
+                                        <p class="card-text">${apartment.location}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr class="my-1">
+                        `);
+                    });
+                    $("#resultLoader").hide();
+                    $("#searchResults").show();
+                },
+                error: function (xhr) {
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
