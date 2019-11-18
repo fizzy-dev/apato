@@ -15,10 +15,17 @@
                     <img class="card-img-top apt-profile-picture rounded-circle"
                         src="<%= user.profilePicture ? user.profilePicture : '/images/default-user.png' %>"
                         alt="Profile Picture">
+                    <% if (typeof currentUser !== 'undefined') {
+                            if (currentUser.id === user.id) { %>
+                    <input id="uploader" type="file" name="profilePicture" hidden>
+                    <a id="uploadLink" class="edit-link" href="#" style="margin: auto">Cập nhật ảnh</a>
+                    <% } %>
+                    <% } %>
                     <hr class="my-4 apt-line-8">
                     <div class="card-body">
                         <h5 class="card-title"><%= user.firstName %> <%= user.lastName %></h5>
-                        <p class="card-text"><i class="fa fa-envelope" style="margin-right: 15px;"></i><%= user.email %></p>
+                        <p class="card-text"><i class="fa fa-envelope" style="margin-right: 15px;"></i><%= user.email %>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -29,16 +36,17 @@
                         Tham gia vào <%= user.createdAt.getFullYear()%>
                         <% if (typeof currentUser !== 'undefined') {
                             if (currentUser.id === user.id) { %>
-                                · <a class="edit-link" href="#">Chỉnh sửa profile</a>
-                            <% } %>
+                        <b> · </b>
+                        <a class="edit-link" href="#">Chỉnh sửa profile</a>
+                        <% } %>
                         <% } %>
                     </p>
                     <hr class="my-3">
                     <h6>About</h6>
                     <% if (user.about) { %>
-                        <p><%= user.about %></p>
+                    <p><%= user.about %></p>
                     <% } else { %>
-                        <p>Chưa có.</p>
+                    <p>Chưa có.</p>
                     <% } %>
                     <h6>Listing</h6>
                 </div>
@@ -48,6 +56,39 @@
         </div>
     </div>
     <%- include('../partials/footer'); -%>
+    <script>
+        $("#uploadLink").on('click', function (e) {
+            e.preventDefault();
+            $("#uploader").trigger('click');
+        });
+        $("#uploader").on('change', function (e) {
+            e.preventDefault();
+            var files = $("#uploader").get(0).files;
+            var data = new FormData();
+
+            if (files.length === 0) {
+                alert('Select atleast 1 file to upload.');
+                return false;
+            }
+
+            data.append('profilePicture', files[0], files[0].name);
+            data.append('id', '<%= user.id %>');
+
+            $.ajax({
+                url: '/api/v1/users',
+                method: 'put',
+                data,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    window.location.reload();
+                },
+                error: function (xhr) {
+                    
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

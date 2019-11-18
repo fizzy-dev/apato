@@ -29,12 +29,9 @@ async function uploads3Image(file) {
             Body: file.buffer,
             ContentType: 'image/png'
         };
-        await s3.upload(params, function (err, data) {
-            if (err) {
-                throw err;
-            }
-            console.log(`File upload successful: ${data.Location}`);
-        });
+        let data = await s3.upload(params).promise();
+        console.log(`File upload successful: ${data.Location}`);
+
         return `${S3_BASE_URL}/${key}`;
     } catch (e) {
         throw e;
