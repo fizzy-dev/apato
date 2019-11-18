@@ -2,7 +2,9 @@ const express = require('express');
 const apiUserRouter = express.Router();
 
 const {
-    passport
+    passport,
+    preUpdateUser,
+    upload
 } = require('../../middlewares');
 const {
     userController
@@ -10,7 +12,7 @@ const {
 
 apiUserRouter.route('/')
 .post(userController.createUser)
-.put(userController.updateUser);
+.put(upload.single('profilePicture'), preUpdateUser, userController.updateUser);
 
 apiUserRouter.route('/sessions')
 .post(passport.authenticate('local'), userController.createSession)

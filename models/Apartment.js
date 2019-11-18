@@ -7,6 +7,7 @@ class Apartment {
         this.ownerId = apartment.ownerId;
         this.location = apartment.location;
         this.picture = apartment.picture;
+        this.price = apartment.price;
     }
 
     validate() {

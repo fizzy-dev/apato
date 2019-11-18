@@ -14,8 +14,8 @@
             <!-- Search bar start -->
             <form id="searchForm" class="form-inline my-2 my-lg-0">
                 <i class="input-icon fa fa-search"></i>
-                <input id="searchString" class="form-control mr-sm-2 shadow-sm search-bar" type="search" placeholder="Tìm kiếm"
-                    aria-label="Search">
+                <input id="searchString" class="form-control mr-sm-2 shadow-sm search-bar" type="search"
+                    placeholder="Tìm kiếm" aria-label="Search">
             </form>
             <!-- Search bar end -->
 
@@ -32,9 +32,22 @@
                     <%- include('../partials/signInModal'); -%>
                 </li>
                 <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Thêm nhà</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Đã lưu</a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="#">Thông báo</a>
+                    </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"><%=currentUser.email %></a>
+                        aria-haspopup="true" aria-expanded="false">
+                        <img class="card-img-top apt-account-thumbnail rounded-circle"
+                            src="<%= currentUser.profilePicture ? currentUser.profilePicture : '/images/default-user.png' %>"
+                            alt="Profile Picture">
+                    </a>
                     <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="userDropdown">
                         <div class="apt-dropdown-items-container">
                             <a class="apt-dropdown-item" href="/users/<%=currentUser.id%>">Thông tin cá nhân</a>

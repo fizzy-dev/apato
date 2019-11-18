@@ -9,6 +9,9 @@ class User {
         this.firstName = user.firstName;
         this.lastName = user.lastName;
         this.profilePicture = user.profilePicture;
+        this.location = user.location;
+        this.about = user.about;
+        this.phoneNumber = user.phoneNumber;
     }
 
     validate() {
@@ -29,8 +32,8 @@ class User {
 
     update() {
         return new Promise((resolve, reject) => {
-            database.query('UPDATE User SET email = ?, password = ?, isAdmin = ?, firstName = ?, lastName = ?, profilePicture = ? WHERE id = ?',
-            [this.email, this.password, this.isAdmin, this.firstName, this.lastName, this.profilePicture, this.id], function (err, result) {
+            database.query('UPDATE User SET email = ?, password = ?, isAdmin = ?, firstName = ?, lastName = ?, profilePicture = ?, location = ?, about = ? WHERE id = ?',
+            [this.email, this.password, this.isAdmin, this.firstName, this.lastName, this.profilePicture, this.location, this.about, this.id], function (err, result) {
                 if (err) {
                     reject(err);
                 } else {
