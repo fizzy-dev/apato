@@ -14,11 +14,17 @@ const {
     preUpdateUser
 } = require('./form');
 
+const {
+    upload
+} = require('./multer');
+
 
 module.exports = {
     passport,
     errorHandler,
     apiErrorHandler,
     checkAdminAuthorization,
-    checkUserAuthorization
+    checkUserAuthorization,
+    preUpdateUser,
+    upload
 }
