@@ -6,6 +6,7 @@ const {
 } = require('../../controllers');
 
 apiApartmentRouter.route('/')
-.get(apartmentController.getApartments);
+.get(apartmentController.getApartments)
+.post(apartmentController.createApartment);
 
 module.exports = apiApartmentRouter;

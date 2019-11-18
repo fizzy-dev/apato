@@ -52,8 +52,12 @@ const updateUser = async (req, res, next) => {
         }
         user = new User(user[0]);
         console.log(user);
-        user.profilePicture = profilePicture;
-        user.firstName = firstName;
+        if (profilePicture) {
+            user.profilePicture = profilePicture;
+        }
+        if (firstName) {
+            user.firstName = firstName;
+        }
         await user.update();
 
         return res.json({
