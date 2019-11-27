@@ -1,7 +1,8 @@
 const createError = require('http-errors');
 
 const {
-    Apartment
+    Apartment,
+    User
 } = require('../models');
 
 // APIs
@@ -53,10 +54,11 @@ const createApartment = async (req, res, next) => {
         let {
             name,
             ownerId,
-            location
+            location,
+            description
         } = req.body;
 
-        let apartment = new Apartment({ name, ownerId, location });
+        let apartment = new Apartment({ name, ownerId, location, description });
 
         await apartment.save();
 
@@ -73,7 +75,24 @@ const createApartment = async (req, res, next) => {
 
 const renderApartment = async (req, res, next) => {
     try {
+        let {
+            id
+        } = req.params;
 
+        let apartment = await Apartment.getApartmentById(id);
+        if (!apartment[0]) {
+            next(createError(404, 'Not found'));
+        }
+
+        let owner = await User.getUserById(apartment[0].ownerId);
+        if (!owner[0]) {
+            next(createError(404, 'Not found'));
+        }
+
+        if (req.isAuthenticated()) {
+            return res.render('pages/apartment', { currentUser: req.user, apartment: apartment[0], owner: owner[0] });
+        }
+        return res.render('pages/apartment', { apartment: apartment[0], owner: owner[0] });
     } catch (e) {
         next(createError(500, 'Unexpected error'));
     }

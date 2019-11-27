@@ -45,7 +45,9 @@ const updateUser = async (req, res, next) => {
             profilePicture,
             location,
             about,
-            id
+            id,
+            firstName,
+            lastName
         } = req.body;
 
         console.log(req.body);
@@ -63,6 +65,12 @@ const updateUser = async (req, res, next) => {
         }
         if (about) {
             user.about = about;
+        }
+        if (firstName) {
+            user.firstName = firstName;
+        }
+        if (lastName) {
+            user.lastName = lastName;
         }
         await user.update();
 

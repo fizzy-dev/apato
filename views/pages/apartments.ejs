@@ -35,13 +35,15 @@
                     res.data.apartments.forEach(apartment => {
                         $("#resultList").append(`
                             <li class="list-group-item">
-                                <div class="card apt-hor-card">
-                                    <img class="apt-hor-img" src="${apartment.picture ? apartment.picture : '/images/sample1.jpg'}" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${apartment.name}</h5>
-                                        <p class="card-text">${apartment.location}</p>
+                                <a href="/apartments/${apartment.id}">
+                                    <div class="card apt-hor-card">
+                                        <img class="apt-hor-img" src="${apartment.picture ? apartment.picture : '/images/sample1.jpg'}" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${apartment.name}</h5>
+                                            <p class="card-text">${apartment.location}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </li>
                             <hr class="my-1 apt-line-10">
                         `);
