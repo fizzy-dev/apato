@@ -201,3 +201,8 @@ hr {
   width: 30px;
   height: 30px;
 }
+
+.hor-flex {
+  display: flex;
+  flex-direction: row;
+}

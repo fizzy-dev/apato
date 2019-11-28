@@ -16,3 +16,8 @@ $ docker ps
 
 # Xem log container process
 $ docker logs <container id>
+
+Dùng docker-compose:
+
+$ docker-compose build
+$ docker-compose up

@@ -8,6 +8,7 @@ class Apartment {
         this.location = apartment.location;
         this.picture = apartment.picture;
         this.price = apartment.price;
+        this.description = apartment.description;
     }
 
     validate() {
@@ -15,8 +16,21 @@ class Apartment {
 
     save() {
         return new Promise((resolve, reject) => {
-            database.query('INSERT INTO Apartment(name, ownerId, location) VALUES(?,?,?)',
-            [this.name, this.ownerId, this.location], function(err, result) {
+            database.query('INSERT INTO Apartment(name, ownerId, location, description) VALUES(?,?,?,?)',
+            [this.name, this.ownerId, this.location, this.description], function(err, result) {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static getApartmentById(id) {
+        return new Promise((resolve, reject) => {
+            database.query('SELECT * FROM Apartment WHERE Apartment.id = ?', [id], function(err, result) {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -37,7 +51,7 @@ class Apartment {
                     resolve(result);
                 }
             });
-        })
+        });
     }
 
     static getApartmentsByKeyword(keyword, offset, limit) {
