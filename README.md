@@ -1,23 +1,24 @@
-Ứng dụng tìm kiếm nhà trọ
+# Ứng dụng tìm kiếm nhà trọ
+Bài tập project môn thực hành lập trình web
+## Dùng dockerfile chạy riêng lẻ các container;
+1. Lệnh build:
+- docker build -t <username>/apato_backend .
 
-Lệnh chạy docker image:
+2. Lệnh xem images:
+- $ docker images
 
-# Lệnh build:
-docker build -t <username>/apato_backend .
+3. Lệnh chạy container
+- $ docker run -p 80:80 -d <username>/apato_backend
 
-# Lệnh xem images:
-docker images
+4. Lệnh danh sách container id
+- $ docker ps
 
-# Chạy container
-docker run -p 80:80 -d <username>/apato_backend
+5. Lệnh Xem log container process
+- $ docker logs <container id>
 
-# Lấy container id
-$ docker ps
+## Dùng docker-compose:
 
-# Xem log container process
-$ docker logs <container id>
-
-Dùng docker-compose:
-
-$ docker-compose build
-$ docker-compose up
+1. Lệnh build 
+- $ docker-compose build
+2. Lệnh chạy composed containers
+- $ docker-compose up

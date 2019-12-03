@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); -%>
+</head>
+
+<body>
+    <%- include('../partials/header'); -%>
+
+    <div class="container" style="margin-top: 50px;">
+        <h5>Trở thành chủ nhà</h5>
+        <form id="addListingForm" style="margin-top: 50px;">
+            <div class="form-group">
+                <label for="apartmentName">Tên hiển thị</label>
+                <input type="text" class="form-control" id="apartmentName" placeholder="Nhập tên cho nhà của bạn"
+                    required>
+                <small id="apartmentNameHelp" class="form-text text-muted">Bạn nên lựa chọn một cái tên phù hợp, giúp
+                    người tìm nhà trọ có thể dễ dàng tìm thấy bạn.</small>
+            </div>
+            <a id="uploadLink" class="edit-link" href="#">Thêm ảnh</a>
+            <div class="image-holder">
+                <img class="apt-picture" id="defaultPicture" src="/images/default-picture.png">
+            </div>
+            <input id="uploader" type="file" name="apartmentPicture" hidden>
+            <div class="form-group">
+                <label for="apartmentLocation">Địa chỉ</label>
+                <input type="text" class="form-control" id="apartmentLocation" placeholder="Nhập địa chỉ nhà cho thuê"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="apartmentDescription">Mô tả</label>
+                <textarea rows="5" class="form-control" id="apartmentDescription" placeholder="Nhập mô tả"
+                    required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="apartmentPrice">Chi phí</label>
+                <input type="number" class="form-control" id="apartmentPrice"
+                    placeholder="Nhập chi phí nhà cho thuê / tháng" required>
+            </div>
+            <!-- <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check</label>
+            </div> -->
+            <div class="hor-flex" style="margin-bottom: 20px;">
+                <button type="submit" class="btn btn-primary">Thêm nhà</button>
+                <div class="loader hidden" id="addListingLoader" style="margin-left: 20px;"></div>
+            </div>
+        </form>
+    </div>
+
+    <%- include('../partials/footer'); -%>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#defaultPicture').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#uploader").change(function () {
+            readURL(this);
+        });
+        $("#uploadLink").on('click', function (e) {
+            e.preventDefault();
+            $("#uploader").trigger('click');
+        });
+        $("#addListingForm").submit(function (e) {
+            e.preventDefault();
+
+            var files = $("#uploader").get(0).files;
+            var data = new FormData();
+
+            data.append('ownerId', '<%= currentUser.id %>');
+            data.append('name', $("#apartmentName").val());
+            data.append('location', $("#apartmentLocation").val());
+            data.append('description', $("#apartmentDescription").val());
+            data.append('price', $("#apartmentPrice").val());
+            data.append('picture', files[0], files[0].name);
+
+            $.ajax({
+                url: '/api/v1/apartments',
+                type: 'post',
+                data,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $("#addListingLoader").show();
+                },
+                success: function (res) {
+                    $("#addListingLoader").hide();
+                    $("#successModal").modal('show');
+
+                },
+                error: function (xhr) {
+                    $("#addListingLoader").hide();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

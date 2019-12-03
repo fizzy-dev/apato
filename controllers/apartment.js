@@ -55,10 +55,12 @@ const createApartment = async (req, res, next) => {
             name,
             ownerId,
             location,
-            description
+            description,
+            price,
+            picture
         } = req.body;
 
-        let apartment = new Apartment({ name, ownerId, location, description });
+        let apartment = new Apartment({ name, ownerId, location, description, price, picture });
 
         await apartment.save();
 
@@ -115,9 +117,21 @@ const renderApartments = async (req, res, next) => {
     }
 }
 
+const renderCreateApartmentForm = async (req, res, next) => {
+    try {
+        if (req.isAuthenticated()) {
+            return res.render('pages/newApartment', { currentUser: req.user });
+        }
+        return res.render('pages/newApartment');
+    } catch (e) {
+        next(e);
+    }
+}
+
 module.exports = {
     getApartments,
     createApartment,
     renderApartments,
-    renderApartment
+    renderApartment,
+    renderCreateApartmentForm
 }
