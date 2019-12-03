@@ -11,7 +11,8 @@ const {
 } = require('./authorization');
 
 const {
-    preUpdateUser
+    preUpdateUser,
+    preCreateApartment
 } = require('./form');
 
 const {
@@ -26,5 +27,6 @@ module.exports = {
     checkAdminAuthorization,
     checkUserAuthorization,
     preUpdateUser,
+    preCreateApartment,
     upload
 }

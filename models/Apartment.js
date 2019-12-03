@@ -16,8 +16,8 @@ class Apartment {
 
     save() {
         return new Promise((resolve, reject) => {
-            database.query('INSERT INTO Apartment(name, ownerId, location, description) VALUES(?,?,?,?)',
-            [this.name, this.ownerId, this.location, this.description], function(err, result) {
+            database.query('INSERT INTO Apartment(name, ownerId, location, description, price, picture) VALUES(?,?,?,?,?,?)',
+            [this.name, this.ownerId, this.location, this.description, this.price, this.picture], function(err, result) {
                 if (err) {
                     console.log(err);
                     reject(err);
