@@ -46,7 +46,8 @@
             type: 'post',
             data: {
                 email: $("#signInEmail").val(),
-                password: $("#signInPassword").val()
+                password: $("#signInPassword").val(),
+                remember: $("#rememberCheck").val()
             },
             beforeSend: function () {
                 $("#signInLoader").show();

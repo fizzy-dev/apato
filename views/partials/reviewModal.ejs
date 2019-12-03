@@ -1,0 +1,27 @@
+<!-- Modal -->
+<div class="modal" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reviewModalTitle">Thêm đánh giá</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="reviewForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="reviewContent">Nhận xét</label>
+            <textarea rows="5" type="text" class="form-control" id="reviewContent"
+              placeholder="Nhập nhận xét của bạn" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="loader hidden" id="reviewLoader"></div>
+          <button type="submit" class="btn btn-primary">Đăng đánh giá </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -86,6 +86,13 @@ const updateUser = async (req, res, next) => {
 
 const createSession = async (req, res, next) => {
     try {
+        if (req.body.remember) {
+            req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // Cookie expires after 30 days
+            console.log(req.body.remember);
+        } else {
+            req.session.cookie.expires = false; // Cookie expires at end of session
+            console.log(req.body.remember);
+        }
         return res.json({
             status: 'success',
             msg: 'Session generated'

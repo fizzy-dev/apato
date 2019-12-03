@@ -41,14 +41,6 @@ const getApartments = async (req, res, next) => {
     }
 }
 
-const getApartment = async (req, res, next) => {
-    try {
-
-    } catch (e) {
-        next(createError(500, 'Unexpected error'));
-    }
-}
-
 const createApartment = async (req, res, next) => {
     try {
         let {
@@ -73,6 +65,29 @@ const createApartment = async (req, res, next) => {
     }
 }
 
+const makeReviews = async (req, res, next) => {
+    try {
+        let review = req.body;
+
+        let apartmentId = req.params.id;
+
+        let userId = req.user.id;
+
+        if (!review.ownerId || !review.content) {
+            next(createError('400', 'Missing parameters'));
+        }
+
+        await Apartment.makeReviews({ ...review, apartmentId, userId });
+
+        return res.json({
+            status: 'success',
+            msg: 'Make review successful'
+        });
+    } catch (e) {
+        next(createError(500, 'Unexpected error'));
+    }
+}
+
 // Rendering
 
 const renderApartment = async (req, res, next) => {
@@ -91,10 +106,13 @@ const renderApartment = async (req, res, next) => {
             next(createError(404, 'Not found'));
         }
 
+        let reviews = await Apartment.getReviews(apartment[0].id);
+        console.log(reviews);
+
         if (req.isAuthenticated()) {
-            return res.render('pages/apartment', { currentUser: req.user, apartment: apartment[0], owner: owner[0] });
+            return res.render('pages/apartment', { currentUser: req.user, apartment: apartment[0], owner: owner[0], reviews });
         }
-        return res.render('pages/apartment', { apartment: apartment[0], owner: owner[0] });
+        return res.render('pages/apartment', { apartment: apartment[0], owner: owner[0], reviews });
     } catch (e) {
         next(createError(500, 'Unexpected error'));
     }
@@ -131,6 +149,7 @@ const renderCreateApartmentForm = async (req, res, next) => {
 module.exports = {
     getApartments,
     createApartment,
+    makeReviews,
     renderApartments,
     renderApartment,
     renderCreateApartmentForm

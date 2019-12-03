@@ -29,10 +29,7 @@ app.use(flash());
 app.use(session({
   secret: 'iloveass2',
   resave: true,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: false
-  }
+  saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
