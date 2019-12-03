@@ -1,0 +1,9 @@
+<div class="card review-item" style="width: 18rem; margin-top: 10px;">
+    <img class="apt-account-thumbnail rounded-circle"
+        src="<%= review.userProfilePicture ? review.userProfilePicture : '/images/default-user.png' %>"
+        alt="Profile Picture">
+    <div class="card-body">
+        <h6 class="card-title"><%= review.userFirstName %> <%= review.userLastName %></h6>
+        <p class="card-text" id="apartmentLocation"><%= review.content %></p>
+    </div>
+</div>

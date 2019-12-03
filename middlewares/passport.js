@@ -17,7 +17,7 @@ passport.use(new LocalStrategy(
     },
     async function (email, password, done) {
         try {
-            let user = await User.getUserByEmail(email);     
+            let user = await User.getUserByEmail(email);
             if (!user[0]) {
                 return done(null, false);
             }

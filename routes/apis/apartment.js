@@ -13,4 +13,7 @@ apiApartmentRouter.route('/')
 .get(apartmentController.getApartments)
 .post(upload.single('picture'), preCreateApartment, apartmentController.createApartment);
 
+apiApartmentRouter.route('/:id/reviews')
+.post(apartmentController.makeReviews);
+
 module.exports = apiApartmentRouter;
