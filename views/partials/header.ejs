@@ -18,7 +18,14 @@
                     <input id="searchString" class="form-control mr-sm-2 shadow-sm search-bar" type="search"
                         placeholder="Tìm kiếm" aria-label="Search" autocomplete="off" required>
                     <div id="suggestionBox" class="shadow-sm hidden">
-                        <div id="defaultSuggestion"><i class="fa fa-search"></i> Tìm theo địa điểm / tên nhà</div>
+                        <div id="defaultSuggestion" class="suggestionMessage"><i class="fa fa-search"></i> Tìm theo địa điểm / tên nhà</div>
+                        <div id="suggestionLoader" class="hidden">
+                            <div class="loader" style="width: 50px; height: 50px;">
+                            </div>
+                        </div>
+                        <div id="errorSuggestion" class="hidden suggestionMessage"><i class="fa fa-search"></i> Lỗi</div>
+                        <div id="emptySuggestion" class="hidden suggestionMessage"><i class="fa fa-search"></i> Không có kết quả</div>
+                        <ul id="suggestionList" class="list-group"></ul>
                     </div>
                 </div>
             </form>

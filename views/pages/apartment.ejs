@@ -93,15 +93,15 @@
                     apartmentId: "<%= apartment.id %>"
                 },
                 beforeSend: function () {
-                    $("#reviewLoader").show();
+                    $("#reviewLoader").removeClass("hidden");
                 },
                 success: function (res) {
-                    $("#reviewLoader").hide();
+                    $("#reviewLoader").addClass("hidden");
                     $("#reviewModal").modal('hide');
                     window.location.reload();
                 },
                 error: function (xhr) {
-                    $("#reviewLoader").hide();
+                    $("#reviewLoader").addClass("hidden");
                 }
             });
         });

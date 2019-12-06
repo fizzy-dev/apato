@@ -75,6 +75,12 @@
     height: 30px;
   }
 
+  .apt-apartment-thumbnail {
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+  }
+
   .image-holder {
     overflow: hidden;
   }
@@ -103,10 +109,18 @@
   width: 45vw !important;
 }
 
-#defaultSuggestion {
+.suggestionMessage {
   font-size: large;
   align-self: center;
   padding-top: 50px;
   padding-bottom: 50px;
   color: #128387;
+}
+
+#suggestionLoader{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }

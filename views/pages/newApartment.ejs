@@ -89,15 +89,15 @@
                 processData: false,
                 contentType: false,
                 beforeSend: function () {
-                    $("#addListingLoader").show();
+                    $("#addListingLoader").removeClass("hidden");
                 },
                 success: function (res) {
-                    $("#addListingLoader").hide();
+                    $("#addListingLoader").addClass("hidden");
                     $("#successModal").modal('show');
 
                 },
                 error: function (xhr) {
-                    $("#addListingLoader").hide();
+                    $("#addListingLoader").addClass("hidden");
                 }
             });
         });
