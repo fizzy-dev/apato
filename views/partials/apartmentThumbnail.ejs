@@ -1,7 +1,15 @@
 <div class="card apt-vert-card" style="width: 18rem; margin-top: 10px;">
     <img class="apt-vert-img" src="<%= apartment.picture %>" alt="Card image cap">
     <div class="card-body">
-        <h5 class="card-title"><%= apartment.name %></h5>
-        <p class="card-text" id="apartmentLocation"><%= apartment.location %></p>
+        <div class="row">
+            <h5 class="card-title col-md-10"><%= apartment.name %></h5>
+            <% if (typeof currentUser !== 'undefined') { %>
+            <h5><a id="apartmentBookmark" href="#">
+                    <i class="fa <%= saved == '0' ? 'fa-bookmark-o' : 'fa-bookmark' %>" style="color:#E22357; margin-left: 15px;"></i>
+                </a></h5>
+            <% } %>
+        </div>
+        <p class="card-text" id="apartmentLocation"><i class="fa fa-map-marker"
+                style="margin-right: 15px;"></i><%= apartment.location %></p>
     </div>
 </div>

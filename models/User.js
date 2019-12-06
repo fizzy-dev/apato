@@ -65,9 +65,56 @@ class User {
                     resolve(result);
                 }
             });
-        })
+        });
     }
 
+    static checkSavedApartment(userId, apartmentId) {
+        return new Promise((resolve, reject) => {
+            database.query('SELECT * FROM UserSaveApartment WHERE userId = ? AND apartmentId = ?', [userId, apartmentId], function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static saveApartment(userId, apartmentId) {
+        return new Promise((resolve, reject) => {
+            database.query('INSERT INTO UserSaveApartment(userId, apartmentId) VALUES(?,?)', [userId, apartmentId], function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static unsaveApartment(userId, apartmentId) {
+        return new Promise((resolve, reject) => {
+            database.query('UPDATE UserSaveApartment SET saved = 0 WHERE userId = ? AND apartmentId = ?', [userId, apartmentId], function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static resaveApartment(userId, apartmentId) {
+        return new Promise((resolve, reject) => {
+            database.query('UPDATE UserSaveApartment SET saved = 1 WHERE userId = ? AND apartmentId = ?', [userId, apartmentId], function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
 }
 
 module.exports = User;

@@ -1,8 +1,10 @@
+const createError = require('http-errors');
+
 const checkUserAuthorization = async (req, res, next) => {
     if (req.isAuthenticated()) {
         next();
     } else {
-        return res.redirect('/');
+        next(createError(401, 'Unauthorized'));
     }
 }
 
@@ -10,7 +12,7 @@ const checkAdminAuthorization = async (req, res, next) => {
     if (req.isAuthenticated() && req.user.isAdmin) {
         next();
     } else {
-        return res.redirect('/');
+        next(createError(401, 'Unauthorized'));
     }
 }
 
