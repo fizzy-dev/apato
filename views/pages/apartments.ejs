@@ -26,8 +26,8 @@
                 url: `/api/v1/apartments?keyword=<%=keyword%>&limit=<%=limit%>&page=<%=page%>`,
                 type: 'get',
                 beforeSend: function () {
-                    $("#resultLoader").show();
-                    $("#searchResults").hide();
+                    $("#resultLoader").removeClass("hidden");
+                    $("#searchResults").addClass("hidden");
                 },
                 success: function (res) {
                     console.log(res.data.apartments);
@@ -48,8 +48,8 @@
                             <hr class="my-1 apt-line-10">
                         `);
                     });
-                    $("#resultLoader").hide();
-                    $("#searchResults").show();
+                    $("#resultLoader").addClass("hidden");
+                    $("#searchResults").removeClass("hidden");
                 },
                 error: function (xhr) {
                 }

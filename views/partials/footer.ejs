@@ -27,15 +27,15 @@
                 isAdmin: 0
             },
             beforeSend: function () {
-                $("#signUpLoader").show();
+                $("#signUpLoader").removeClass("hidden");
             },
             success: function (res) {
-                $("#signUpLoader").hide();
+                $("#signUpLoader").addClass("hidden");
                 $("#signUpModal").modal('hide');
                 $("#successModal").modal('show');
             },
             error: function (xhr) {
-                $("#signUpLoader").hide();
+                $("#signUpLoader").addClass("hidden");
             }
         });
     });
@@ -50,15 +50,15 @@
                 remember: $("#rememberCheck").val()
             },
             beforeSend: function () {
-                $("#signInLoader").show();
+                $("#signInLoader").removeClass("hidden");
             },
             success: function (res) {
-                $("#signInLoader").hide();
+                $("#signInLoader").addClass("hidden");
                 $("#signInModal").modal('hide');
                 window.location.reload();
             },
             error: function (xhr) {
-                $("#signInLoader").hide();
+                $("#signInLoader").addClass("hidden");
             }
         });
     });
@@ -78,6 +78,9 @@
             }
         });
     }
+    $("#suggestionBox").on('mousedown', function(e) {
+        e.preventDefault();
+    });
     $("#searchString").on('focus', function (e) {
         $("#suggestionBox").removeClass("hidden");
         $("#suggestionBox").addClass("active");
@@ -86,9 +89,51 @@
         $("#suggestionBox").removeClass("active");
         $("#suggestionBox").addClass("hidden");
     });
-    $("searchString").on('keyup', function(e) {
-        $.ajax({
-            
-        });
+    $("#searchString").on('keyup', function (e) {
+        var keyword = $("#searchString").val();
+        if (keyword == '') {
+            $("#suggestionList").empty();
+            $("#errorSuggestion").addClass("hidden");
+            $("#emptySuggestion").addClass("hidden");
+            $("#defaultSuggestion").show();
+        } else {
+            $.ajax({
+                url: `/api/v1/apartments?keyword=${keyword}&limit=5&page=1`,
+                type: 'get',
+                beforeSend: function () {
+                    $("#suggestionList").empty();
+                    $("#defaultSuggestion").hide();
+                    $("#errorSuggestion").addClass("hidden");
+                    $("#emptySuggestion").addClass("hidden");
+                    $("#suggestionLoader").removeClass("hidden");
+                },
+                success: function (res) {
+                    $("#suggestionLoader").addClass("hidden");
+                    if (!res.data.apartments[0]) {
+                        $("#emptySuggestion").removeClass("hidden");
+                    }
+                    res.data.apartments.forEach(apartment => {
+                        $("#suggestionList").append(`
+                            <li class="list-group-item">
+                                    <a href="/apartments/${apartment.id}">
+                                    <div class="row">
+                                        <img class="apt-apartment-thumbnail col-3" src="${apartment.picture ? apartment.picture : '/images/default-picture.png'}" alt="Card image cap">
+                                        <div class="col-9">
+                                            <h6>${apartment.name}</h6>
+                                            <p>${apartment.location}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <hr class="my-1 apt-line-10">
+                        `);
+                    });
+                },
+                error: function (xhr) {
+                    $("#suggestionLoader").addClass("hidden");
+                    $("errorSuggestion").removeClass("hidden");
+                }
+            });
+        }
     });
 </script>
