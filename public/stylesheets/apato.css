@@ -84,3 +84,29 @@
     flex-direction: row;
     border: none;
   }
+#suggestionBox {
+  position: absolute;
+  width: 30vw !important;
+  display: flex;
+  flex-direction: column;
+  transition: width 300ms;
+  border-width: 0.5px !important;
+  font-weight: 500;
+  border-color: #EAEAEA;
+  border-style: solid;
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+#suggestionBox.active {
+  width: 45vw !important;
+}
+
+#defaultSuggestion {
+  font-size: large;
+  align-self: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  color: #128387;
+}

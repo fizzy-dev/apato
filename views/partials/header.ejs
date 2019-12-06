@@ -4,7 +4,7 @@
         <a class="navbar-brand" href="/">
             <img class="logo" src="/images/logo-1.png">
         </a>
-        
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -14,8 +14,13 @@
             <!-- Search bar start -->
             <form id="searchForm" class="form-inline my-2 my-lg-0">
                 <i class="input-icon fa fa-search"></i>
-                <input id="searchString" class="form-control mr-sm-2 shadow-sm search-bar" type="search"
-                    placeholder="Tìm kiếm" aria-label="Search" autocomplete="off" required>
+                <div class="ui-widget">
+                    <input id="searchString" class="form-control mr-sm-2 shadow-sm search-bar" type="search"
+                        placeholder="Tìm kiếm" aria-label="Search" autocomplete="off" required>
+                    <div id="suggestionBox" class="shadow-sm hidden">
+                        <div id="defaultSuggestion"><i class="fa fa-search"></i> Tìm theo địa điểm / tên nhà</div>
+                    </div>
+                </div>
             </form>
             <!-- Search bar end -->
 

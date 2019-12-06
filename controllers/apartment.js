@@ -110,7 +110,15 @@ const renderApartment = async (req, res, next) => {
         console.log(reviews);
 
         if (req.isAuthenticated()) {
-            return res.render('pages/apartment', { currentUser: req.user, apartment: apartment[0], owner: owner[0], reviews });
+            let check = await User.checkSavedApartment(req.user.id, id);
+            console.log(check);
+            let saved;
+            if (!check[0]) {
+                saved = 0;
+            } else {
+                saved = check[0].saved;
+            }
+            return res.render('pages/apartment', { currentUser: req.user, apartment: apartment[0], owner: owner[0], reviews, saved });
         }
         return res.render('pages/apartment', { apartment: apartment[0], owner: owner[0], reviews });
     } catch (e) {

@@ -10,8 +10,8 @@
             "JWT_SECRET": "iloveass2"
         },
         "aws": {
-            "SECRET_KEY": "baiuRDsYulC3/DPc21TXM7Ck/h96e8/k3PSpqZJQ",
-            "ACCESS_KEY": "AKIAIMAUIGACN5ESKCMA",
+            "SECRET_KEY": "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",
+            "ACCESS_KEY": "AKIAJKMEQHG3P43BH5OA",
             "BUCKET_NAME": "retozus3bucket",
             "S3_BASE_URL": "https://retozus3bucket.s3.ap-northeast-1.amazonaws.com"
         }

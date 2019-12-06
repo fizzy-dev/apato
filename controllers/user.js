@@ -116,6 +116,37 @@ const destroySession = async (req, res, next) => {
     }
 }
 
+const saveApartment = async (req, res, next) => {
+    try {
+        let {
+            apartmentId
+        } = req.body;
+
+        let userId = req.user.id;
+
+        let check = await User.checkSavedApartment(userId, apartmentId);
+
+        if (!check[0]) {
+            await User.saveApartment(userId, apartmentId);
+        } else {
+            if (check[0].saved == '0') {
+                console.log('0');
+                await User.resaveApartment(userId, apartmentId);
+            } else {
+                console.log('1');
+                await User.unsaveApartment(userId, apartmentId);
+            }
+        }
+        return res.json({
+            status: 'success',
+            msg: 'Save or unsave apartment successful'
+        });
+    } catch (e) {
+        console.log(e.message);
+        next(createError(500, 'Unexpected error'));
+    }
+}
+
 // Rendering
 
 const renderUser = async (req, res, next) => {
@@ -135,6 +166,7 @@ const renderUser = async (req, res, next) => {
 module.exports = {
     createUser,
     updateUser,
+    saveApartment,
     createSession,
     destroySession,
     renderUser
