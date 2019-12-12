@@ -2,14 +2,16 @@ const express = require('express');
 const userRouter = express.Router();
 
 const {
-  passport
+  checkUserAuthorization
 } = require('../middlewares');
 
 const {
-  userController
+  userController,
+  apartmentController
 } = require('../controllers');
 
 /* GET users listing. */
+userRouter.get('/saved', checkUserAuthorization, apartmentController.renderSavedApartments);
 userRouter.get('/:id', userController.renderUser);
 
 module.exports = userRouter;

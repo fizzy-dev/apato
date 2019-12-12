@@ -48,7 +48,18 @@
                     <% } else { %>
                     <p>Chưa có.</p>
                     <% } %>
-                    <h6>Listing</h6>
+                    <% if (apartments[0]) {%>
+                        <h6>Listing</h6>
+                    <% }%>
+                    <div class="row">
+                        <% apartments.forEach((apartment) => { %>
+                        <div class="col-12 col-sm-6">
+                            <a href="/apartments/<%= apartment.id %>">
+                                <%- include('../partials/apartmentVertCard', { apartment }) %>
+                            </a>
+                        </div>
+                        <% }) %>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,7 +95,7 @@
                     window.location.reload();
                 },
                 error: function (xhr) {
-                    
+
                 }
             });
         });

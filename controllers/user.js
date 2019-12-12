@@ -5,7 +5,8 @@ const {
 } = require('../utils');
 
 const {
-    User
+    User,
+    Apartment
 } = require('../models');
 
 // APIs
@@ -152,14 +153,17 @@ const saveApartment = async (req, res, next) => {
 const renderUser = async (req, res, next) => {
     let { id } = req.params;
     let user = await User.getUserById(id);
+    let apartments = await Apartment.getOwnApartments(id);
     if (req.isAuthenticated()) {
         return res.render('pages/user', {
             currentUser: req.user,
-            user: user[0]
+            user: user[0],
+            apartments
         });
     }
     return res.render('pages/user', {
-        user: user[0]
+        user: user[0],
+        apartments
     });
 }
 

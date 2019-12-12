@@ -1,4 +1,5 @@
 const errorHandler = async (err, req, res, next) => {
+    console.log(err);
     if (req.isAuthenticated()) {
         return res.render('pages/error', {
             error: err,

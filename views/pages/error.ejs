@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include('../partials/head'); -%>
 </head>
+
 <body>
     <%- include('../partials/header'); -%>
-    <%= error.status %>
+    <div class="container">
+        <div class="row justify-content-center" style="margin-top: 100px;">
+            <p style="justify-self: center;"><h1><%= error.status %></h1>
+            </p>
+        </div>
+    </div>
     <%- include('../partials/footer'); -%>
 </body>
+
 </html>

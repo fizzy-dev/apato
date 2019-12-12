@@ -44,15 +44,28 @@ const getApartments = async (req, res, next) => {
 const createApartment = async (req, res, next) => {
     try {
         let {
-            name,
-            ownerId,
-            location,
-            description,
-            price,
-            picture
+            name, ownerId,
+            location, description,
+            price, picture,
+            allowPets, nearGroceries,
+            hasParkingLot, noSharing,
+            numberOfFloors, area,
+            hasWifi, hasTv,
+            kitchen, security,
+            bedrooms
         } = req.body;
 
-        let apartment = new Apartment({ name, ownerId, location, description, price, picture });
+        let apartment = new Apartment({
+            name, ownerId,
+            location, description,
+            price, picture,
+            allowPets, nearGroceries,
+            hasParkingLot, noSharing,
+            numberOfFloors, area,
+            hasTv, hasWifi,
+            kitchen, security,
+            bedrooms
+        });
 
         await apartment.save();
 
@@ -154,11 +167,24 @@ const renderCreateApartmentForm = async (req, res, next) => {
     }
 }
 
+const renderSavedApartments = async (req, res, next) => {
+    try {
+        if (req.isAuthenticated()) {
+            let apartments = await Apartment.getSavedApartments(req.user.id);
+            return res.render('pages/savedApartments', { currentUser: req.user, apartments });
+        }
+        return res.render('pages/savedApartments');
+    } catch (e) {
+        next(e);
+    }
+}
+
 module.exports = {
     getApartments,
     createApartment,
     makeReviews,
     renderApartments,
     renderApartment,
-    renderCreateApartmentForm
+    renderCreateApartmentForm,
+    renderSavedApartments
 }

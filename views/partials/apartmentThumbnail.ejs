@@ -5,11 +5,15 @@
             <h5 class="card-title col-md-10"><%= apartment.name %></h5>
             <% if (typeof currentUser !== 'undefined') { %>
             <h5><a id="apartmentBookmark" href="#">
-                    <i class="fa <%= saved == '0' ? 'fa-bookmark-o' : 'fa-bookmark' %>" style="color:#E22357; margin-left: 15px;"></i>
+                    <i class="fa <%= saved == '0' ? 'fa-bookmark-o' : 'fa-bookmark' %>"
+                        style="color:#E22357; margin-left: 15px;"></i>
                 </a></h5>
             <% } %>
         </div>
         <p class="card-text" id="apartmentLocation"><i class="fa fa-map-marker"
                 style="margin-right: 15px;"></i><%= apartment.location %></p>
+        <p class="card-text"><i class="fa fa-square-o" style="margin-right: 15px;"></i><%= apartment.area %> m2</p>
+        <p class="card-text"><i class="fa fa-home" style="margin-right: 15px;"></i><%= apartment.numberOfFloors %> tầng</p>
+        <p class="card-text"><i class="fa fa-money" style="margin-right: 15px;"></i><%= apartment.price %> VND</p>
     </div>
 </div>

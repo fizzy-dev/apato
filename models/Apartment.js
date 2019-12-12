@@ -9,6 +9,17 @@ class Apartment {
         this.picture = apartment.picture;
         this.price = apartment.price;
         this.description = apartment.description;
+        this.allowPets = apartment.allowPets;
+        this.noSharing = apartment.noSharing;
+        this.hasParkingLot = apartment.hasParkingLot;
+        this.nearGroceries = apartment.nearGroceries;
+        this.area = apartment.area;
+        this.numberOfFloors = apartment.numberOfFloors;
+        this.hasWifi = apartment.hasWifi;
+        this.hasTv = apartment.hasTv;
+        this.bedrooms = apartment.bedrooms;
+        this.kitchen = apartment.kitchen;
+        this.security = apartment.security;
     }
 
     validate() {
@@ -16,8 +27,8 @@ class Apartment {
 
     save() {
         return new Promise((resolve, reject) => {
-            database.query('INSERT INTO Apartment(name, ownerId, location, description, price, picture) VALUES(?,?,?,?,?,?)',
-                [this.name, this.ownerId, this.location, this.description, this.price, this.picture], function (err, result) {
+            database.query('INSERT INTO Apartment(name, ownerId, location, description, price, picture, allowPets, noSharing, hasParkingLot, nearGroceries, area, numberOfFloors, hasWifi, hasTv, bedrooms, kitchen, security) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                [this.name, this.ownerId, this.location, this.description, this.price, this.picture, this.allowPets, this.noSharing, this.hasParkingLot, this. nearGroceries, this.area, this.numberOfFloors, this.hasWifi, this.hasTv, this.bedrooms, this.kitchen, this.security], function (err, result) {
                     if (err) {
                         console.log(err);
                         reject(err);
@@ -59,6 +70,36 @@ class Apartment {
             console.log(keyword);
             database.query('SELECT * FROM Apartment WHERE name LIKE ? OR location LIKE ? LIMIT ?,?; SELECT COUNT(*) as count FROM Apartment WHERE name LIKE ? OR location LIKE ?',
                 [`%${keyword}%`, `%${keyword}%`, offset, limit, `%${keyword}%`, `%${keyword}%`], function (err, results) {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    } else {
+                        console.log(results);
+                        resolve(results);
+                    }
+                });
+        });
+    }
+
+    static getSavedApartments(userId) {
+        return new Promise((resolve, reject) => {
+            database.query('SELECT * FROM Apartment INNER JOIN UserSaveApartment ON Apartment.id = UserSaveApartment.apartmentId WHERE UserSaveApartment.userId = ?',
+                [userId], function (err, results) {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    } else {
+                        console.log(results);
+                        resolve(results);
+                    }
+                });
+        });
+    }
+
+    static getOwnApartments(userId) {
+        return new Promise((resolve, reject) => {
+            database.query('SELECT * FROM Apartment WHERE ownerId = ?',
+                [userId], function (err, results) {
                     if (err) {
                         console.log(err);
                         reject(err);

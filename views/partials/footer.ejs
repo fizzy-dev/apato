@@ -36,6 +36,7 @@
             },
             error: function (xhr) {
                 $("#signUpLoader").addClass("hidden");
+                $("#signUpMessage").removeClass("hidden");
             }
         });
     });
@@ -59,6 +60,7 @@
             },
             error: function (xhr) {
                 $("#signInLoader").addClass("hidden");
+                $("#signInMessage").removeClass("hidden");
             }
         });
     });
@@ -78,7 +80,7 @@
             }
         });
     }
-    $("#suggestionBox").on('mousedown', function(e) {
+    $("#suggestionBox").on('mousedown', function (e) {
         e.preventDefault();
     });
     $("#searchString").on('focus', function (e) {
@@ -112,7 +114,7 @@
                     if (!res.data.apartments[0]) {
                         $("#emptySuggestion").removeClass("hidden");
                     }
-                    res.data.apartments.forEach(apartment => {
+                    res.data.apartments.forEach((apartment, index) => {
                         $("#suggestionList").append(`
                             <li class="list-group-item">
                                     <a href="/apartments/${apartment.id}">
@@ -125,8 +127,12 @@
                                     </div>
                                 </a>
                             </li>
+                        `);
+                        if (index != res.data.apartments.length - 1) {
+                            $("#suggestionList").append(`
                             <hr class="my-1 apt-line-10">
                         `);
+                        }
                     });
                 },
                 error: function (xhr) {
