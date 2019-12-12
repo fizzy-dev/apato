@@ -83,7 +83,7 @@ class Apartment {
 
     static getSavedApartments(userId) {
         return new Promise((resolve, reject) => {
-            database.query('SELECT * FROM Apartment INNER JOIN UserSaveApartment ON Apartment.id = UserSaveApartment.apartmentId WHERE UserSaveApartment.userId = ?',
+            database.query('SELECT Apartment.* FROM Apartment INNER JOIN UserSaveApartment ON Apartment.id = UserSaveApartment.apartmentId WHERE UserSaveApartment.userId = ?',
                 [userId], function (err, results) {
                     if (err) {
                         console.log(err);
