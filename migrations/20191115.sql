@@ -1,0 +1,10 @@
+CREATE TABLE Review(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
+    content TEXT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User(id)
+);
+
+ALTER TABLE Review ADD apartmentId BIGINT NOT NULL;
+
+ALTER TABLE Review ADD FOREIGN KEY(apartmentId) REFERENCES Apartment(id);

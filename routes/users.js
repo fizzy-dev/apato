@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const userRouter = express.Router();
+
+const {
+  checkUserAuthorization
+} = require('../middlewares');
+
+const {
+  userController,
+  apartmentController
+} = require('../controllers');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+userRouter.get('/saved', checkUserAuthorization, apartmentController.renderSavedApartments);
+userRouter.get('/:id', userController.renderUser);
 
-module.exports = router;
+module.exports = userRouter;

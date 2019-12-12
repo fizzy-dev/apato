@@ -1,0 +1,10 @@
+<div class="card review-item" style="width: 18rem; margin-top: 10px;">
+    <img class="apt-account-thumbnail rounded-circle"
+        src="<%= review.userProfilePicture ? review.userProfilePicture : '/images/default-user.png' %>"
+        alt="Profile Picture">
+    <div class="card-body">
+        <small style="justify-self: right;"><%= review.createdAt.getDate() %> / <%= review.createdAt.getMonth() %> / <%= review.createdAt.getFullYear() %></small>
+        <h6 class="card-title"><%= review.userFirstName %> <%= review.userLastName %></h6>
+        <p class="card-text" id="apartmentLocation"><%= review.content %></p>
+    </div>
+</div>

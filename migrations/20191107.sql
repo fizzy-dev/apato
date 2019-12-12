@@ -1,0 +1,9 @@
+ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY '12345678';
+
+CREATE TABLE User(
+    id BIGINT PRIMARY KEY,
+    username VARCHAR(30) UNIQUE NOT NULL,
+    password VARCHAR(50) NOT NULL 
+);
+
+ALTER TABLE User ADD isAdmin BOOLEAN DEFAULT 0;

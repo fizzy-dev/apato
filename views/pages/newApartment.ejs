@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); -%>
+</head>
+
+<body>
+    <%- include('../partials/header'); -%>
+
+    <div class="container" style="margin-top: 50px;">
+        <h5>Trở thành chủ nhà</h5>
+        <form id="addListingForm" style="margin-top: 50px;">
+            <div class="form-group">
+                <label for="apartmentName">Tên hiển thị</label>
+                <input type="text" class="form-control" id="apartmentName" placeholder="Nhập tên cho nhà của bạn"
+                    required>
+                <small id="apartmentNameHelp" class="form-text text-muted">Bạn nên lựa chọn một cái tên phù hợp, giúp
+                    người tìm nhà trọ có thể dễ dàng tìm thấy bạn.</small>
+            </div>
+            <a id="uploadLink" class="edit-link" href="#">Thêm ảnh</a>
+            <div class="image-holder">
+                <img class="apt-picture" id="defaultPicture" src="/images/default-picture.png">
+            </div>
+            <input id="uploader" type="file" name="apartmentPicture" hidden>
+            <div class="form-group">
+                <label for="apartmentLocation">Địa chỉ</label>
+                <input type="text" class="form-control" id="apartmentLocation" placeholder="Nhập địa chỉ nhà cho thuê"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="apartmentDescription">Mô tả</label>
+                <textarea rows="5" class="form-control" id="apartmentDescription" placeholder="Nhập mô tả"
+                    required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="apartmentPrice">Chi phí</label>
+                <input type="number" class="form-control" id="apartmentPrice"
+                    placeholder="Nhập chi phí nhà cho thuê / tháng" required>
+            </div>
+            <label>Tiện ích</label>
+            <small id="apartmentNameHelp" class="form-text text-muted">Điền những tiện ích để giúp người tìm nhà lựa
+                chọn tốt hơn</small>
+            <hr>
+            <div class="row">
+                <div class="form-group col-6 col-sm-4">
+                    <label for="allowPets"><i class="fa fa-paw" style="margin-right: 15px;"></i>Cho phép nuôi
+                        thú</label>
+                    <input class="form-control" type="checkbox" id="allowPets" value="0">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="noSharing"><i class="fa fa-home" style="margin-right: 15px;"></i>Không chung chủ</label>
+                    <input class="form-control" type="checkbox" id="noSharing" value="0">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="nearGroceries"><i class="fa fa-shopping-cart" style="margin-right: 15px;"></i>Gần siêu
+                        thị</label>
+                    <input class="form-control" type="checkbox" id="nearGroceries" value="0">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="hasParkingLot"><i class="fa fa-car" style="margin-right: 15px;"></i>Có chỗ gửi ô
+                        tô</label>
+                    <input class="form-control" type="checkbox" id="hasParkingLot" value="0">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="hasTv"><i class="fa fa-tv" style="margin-right: 15px;"></i>Có TV</label>
+                    <input class="form-control" type="checkbox" id="hasTv" value="0">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="hasWifi"><i class="fa fa-wifi" style="margin-right: 15px;"></i>Có Wifi</label>
+                    <input class="form-control" type="checkbox" id="hasWifi" value="0">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="kitchen"><i class="fa fa-cutlery" style="margin-right: 15px;"></i>Có nhà bếp</label>
+                    <input class="form-control" type="checkbox" id="kitchen" value="0">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="bedrooms"><i class="fa fa-bed" style="margin-right: 15px;"></i>Phòng ngủ</label>
+                    <input class="form-control" type="number" id="bedrooms" placeholder="0" style="width: 50px;">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="bathrooms"><i class="fa fa-bath" style="margin-right: 15px;"></i>Phòng vệ sinh</label>
+                    <input class="form-control" type="number" id="bathrooms" placeholder="0" style="width: 50px;">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="security"><i class="fa fa-lock" style="margin-right: 15px;"></i>Có bảo vệ</label>
+                    <input class="form-control" type="checkbox" id="security">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12 col-sm-6">
+                    <label for="allowPet">Diện tích</label>
+                    <input class="form-control" type="number" id="area" placeholder="Nhập diện tích theo m2" required>
+                </div>
+                <div class="form-group col-12 col-sm-6">
+                    <label for="allowPet">Số tầng</label>
+                    <input class="form-control" type="number" id="numberOfFloors" placeholder="Nhập số tầng" required>
+                </div>
+            </div>
+            <div class="hor-flex" style="margin-bottom: 20px;">
+                <button type="submit" class="btn btn-primary">Thêm nhà</button>
+                <div class="loader hidden" id="addListingLoader" style="margin-left: 20px;"></div>
+            </div>
+        </form>
+    </div>
+
+    <%- include('../partials/footer'); -%>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#defaultPicture').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $('#allowPets').on('change', function () {
+            this.value = this.checked ? 1 : 0;
+        });
+        $('#hasParkingLot').on('change', function () {
+            this.value = this.checked ? 1 : 0;
+        });
+        $('#nearGroceries').on('change', function () {
+            this.value = this.checked ? 1 : 0;
+        });
+        $('#noSharing').on('change', function () {
+            this.value = this.checked ? 1 : 0;
+        });
+        $('#hasWifi').on('change', function () {
+            this.value = this.checked ? 1 : 0;
+        });
+        $('#hasTv').on('change', function () {
+            this.value = this.checked ? 1 : 0;
+        });
+        $('#kitchen').on('change', function () {
+            this.value = this.checked ? 1 : 0;
+        });
+        $('#security').on('change', function () {
+            this.value = this.checked ? 1 : 0;
+        });
+        $("#uploader").change(function () {
+            readURL(this);
+        });
+        $("#uploadLink").on('click', function (e) {
+            e.preventDefault();
+            $("#uploader").trigger('click');
+        });
+        $("#addListingForm").submit(function (e) {
+            e.preventDefault();
+
+            var files = $("#uploader").get(0).files;
+            var data = new FormData();
+
+            data.append('ownerId', '<%= currentUser.id %>');
+            data.append('name', $("#apartmentName").val());
+            data.append('location', $("#apartmentLocation").val());
+            data.append('description', $("#apartmentDescription").val());
+            data.append('price', $("#apartmentPrice").val());
+            data.append('picture', files[0], files[0].name);
+            data.append('allowPets', $("#allowPets").val());
+            data.append('hasParkingLot', $("#hasParkingLot").val());
+            data.append('noSharing', $("#noSharing").val());
+            data.append('nearGroceries', $("#nearGroceries").val());
+            data.append('area', $("#area").val());
+            data.append('numberOfFloors', $("#numberOfFloors").val());
+            data.append('hasWifi', $("#hasWifi").val());
+            data.append('hasTv', $("#hasTv").val());
+            data.append('kitchen', $("#kitchen").val());
+            data.append('bedrooms', $("#bedrooms").val());
+            data.append('bathrooms', $("#bathrooms").val());
+            data.append('security', $("#security").val());
+            $.ajax({
+                url: '/api/v1/apartments',
+                type: 'post',
+                data,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $("#addListingLoader").removeClass("hidden");
+                },
+                success: function (res) {
+                    $("#addListingLoader").addClass("hidden");
+                    $("#successModal").modal('show');
+                },
+                error: function (xhr) {
+                    $("#addListingLoader").addClass("hidden");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

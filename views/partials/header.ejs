@@ -1,0 +1,77 @@
+<!-- views/partials/header.ejs -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+        <a class="navbar-brand" href="/">
+            <img class="logo" src="/images/logo-1.png">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Search bar start -->
+            <form id="searchForm" class="form-inline my-2 my-lg-0">
+                <i class="input-icon fa fa-search"></i>
+                <div class="ui-widget">
+                    <input id="searchString" class="form-control mr-sm-2 shadow-sm search-bar" type="search"
+                        placeholder="Tìm kiếm" aria-label="Search" autocomplete="off" required>
+                    <div id="suggestionBox" class="shadow-sm hidden">
+                        <div id="defaultSuggestion" class="suggestionMessage"><i class="fa fa-search"></i> Tìm theo địa điểm / tên nhà</div>
+                        <div id="suggestionLoader" class="hidden">
+                            <div class="loader" style="width: 50px; height: 50px;">
+                            </div>
+                        </div>
+                        <div id="errorSuggestion" class="hidden suggestionMessage"><i class="fa fa-search"></i> Lỗi</div>
+                        <div id="emptySuggestion" class="hidden suggestionMessage"><i class="fa fa-search"></i> Không có kết quả</div>
+                        <ul id="suggestionList" class="list-group"></ul>
+                    </div>
+                </div>
+            </form>
+            <!-- Search bar end -->
+
+            <!-- Navigation start -->
+
+            <ul class="navbar-nav ml-auto">
+                <% if (typeof currentUser == 'undefined') { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#signUpModal">Đăng ký</a>
+                    <%- include('../partials/signUpModal'); -%>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#signInModal">Đăng nhập</a>
+                    <%- include('../partials/signInModal'); -%>
+                </li>
+                <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/apartments/new">Thêm nhà</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/saved">Đã lưu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Thông báo</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <img class="apt-account-thumbnail rounded-circle"
+                            src="<%= currentUser.profilePicture ? currentUser.profilePicture : '/images/default-user.png' %>"
+                            alt="Profile Picture">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="userDropdown">
+                        <div class="apt-dropdown-items-container">
+                            <a class="apt-dropdown-item" href="/users/<%=currentUser.id%>">Thông tin cá nhân</a>
+                            <a class="apt-dropdown-item" href="#">Tài khoản</a>
+                            <a class="apt-dropdown-item" href="#" onclick="logout()">Đăng xuất</a>
+                        </div>
+                    </div>
+                </li>
+                <% } %>
+            </ul>
+            <!-- Navigation end -->
+            <%- include('../partials/successModal'); -%>
+        </div>
+    </nav>
+</header>

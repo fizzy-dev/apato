@@ -1,0 +1,145 @@
+<!-- views/partials/footer.ejs -->
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+    integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+<script>
+    $("#searchForm").submit(function (e) {
+        e.preventDefault();
+        window.location.replace(`/apartments?keyword=${$("#searchString").val()}`);
+    });
+    $("#signUpForm").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/api/v1/users',
+            type: 'post',
+            data: {
+                email: $("#signUpEmail").val(),
+                password: $("#signUpPassword").val(),
+                firstName: $("#signUpFirstName").val(),
+                lastName: $("#signUpLastName").val(),
+                isAdmin: 0
+            },
+            beforeSend: function () {
+                $("#signUpLoader").removeClass("hidden");
+            },
+            success: function (res) {
+                $("#signUpLoader").addClass("hidden");
+                $("#signUpModal").modal('hide');
+                $("#successModal").modal('show');
+            },
+            error: function (xhr) {
+                $("#signUpLoader").addClass("hidden");
+                $("#signUpMessage").removeClass("hidden");
+            }
+        });
+    });
+    $("#signInForm").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/api/v1/users/sessions',
+            type: 'post',
+            data: {
+                email: $("#signInEmail").val(),
+                password: $("#signInPassword").val(),
+                remember: $("#rememberCheck").val()
+            },
+            beforeSend: function () {
+                $("#signInLoader").removeClass("hidden");
+            },
+            success: function (res) {
+                $("#signInLoader").addClass("hidden");
+                $("#signInModal").modal('hide');
+                window.location.reload();
+            },
+            error: function (xhr) {
+                $("#signInLoader").addClass("hidden");
+                $("#signInMessage").removeClass("hidden");
+            }
+        });
+    });
+    function logout() {
+        $.ajax({
+            url: '/api/v1/users/sessions',
+            type: 'delete',
+            beforeSend: function () {
+                $("#signOutLoader").show();
+            },
+            success: function (res) {
+                $("#signOutLoader").hide();
+                window.location.reload();
+            },
+            error: function (xhr) {
+                $("#signOutLoader").hide();
+            }
+        });
+    }
+    $("#suggestionBox").on('mousedown', function (e) {
+        e.preventDefault();
+    });
+    $("#searchString").on('focus', function (e) {
+        $("#suggestionBox").removeClass("hidden");
+        $("#suggestionBox").addClass("active");
+    });
+    $("#searchString").on('focusout', function (e) {
+        $("#suggestionBox").removeClass("active");
+        $("#suggestionBox").addClass("hidden");
+    });
+    $("#searchString").on('keyup', function (e) {
+        var keyword = $("#searchString").val();
+        if (keyword == '') {
+            $("#suggestionList").empty();
+            $("#errorSuggestion").addClass("hidden");
+            $("#emptySuggestion").addClass("hidden");
+            $("#defaultSuggestion").show();
+        } else {
+            $.ajax({
+                url: `/api/v1/apartments?keyword=${keyword}&limit=5&page=1`,
+                type: 'get',
+                beforeSend: function () {
+                    $("#suggestionList").empty();
+                    $("#defaultSuggestion").hide();
+                    $("#errorSuggestion").addClass("hidden");
+                    $("#emptySuggestion").addClass("hidden");
+                    $("#suggestionLoader").removeClass("hidden");
+                },
+                success: function (res) {
+                    $("#suggestionLoader").addClass("hidden");
+                    if (!res.data.apartments[0]) {
+                        $("#emptySuggestion").removeClass("hidden");
+                    }
+                    res.data.apartments.forEach((apartment, index) => {
+                        $("#suggestionList").append(`
+                            <li class="list-group-item">
+                                    <a href="/apartments/${apartment.id}">
+                                    <div class="row">
+                                        <img class="apt-apartment-thumbnail col-3" src="${apartment.picture ? apartment.picture : '/images/default-picture.png'}" alt="Card image cap">
+                                        <div class="col-9">
+                                            <h6>${apartment.name}</h6>
+                                            <p>${apartment.location}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        `);
+                        if (index != res.data.apartments.length - 1) {
+                            $("#suggestionList").append(`
+                            <hr class="my-1 apt-line-10">
+                        `);
+                        }
+                    });
+                },
+                error: function (xhr) {
+                    $("#suggestionLoader").addClass("hidden");
+                    $("errorSuggestion").removeClass("hidden");
+                }
+            });
+        }
+    });
+</script>

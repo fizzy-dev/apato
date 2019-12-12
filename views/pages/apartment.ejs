@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); -%>
+</head>
+
+<body>
+    <%- include('../partials/header'); -%>
+
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <% if (typeof currentUser !== 'undefined') { %>
+                <%- include('../partials/apartmentThumbnail', { apartment, saved, currentUser }); -%>
+                <% } else { %>
+                <%- include('../partials/apartmentThumbnail', { apartment }); -%>
+                <% } %>
+            </div>
+            <div class="col-12 col-sm-8">
+                <a class="hor-flex" href="/users/<%= owner.id %>" style="align-items: center;" target="_blank">
+                    <img class="apt-account-thumbnail rounded-circle"
+                        src="<%= owner.profilePicture ? owner.profilePicture : '/images/default-user.png' %>"
+                        alt="Profile Picture" style="margin-right: 10px;">
+                    <h6><%= owner.firstName %> <%= owner.lastName %></h6>
+                </a>
+                <hr>
+                <h5 style="margin-bottom: 20px;">Mô tả</h5>
+                <p><%= apartment.description %></p>
+                <% if (apartment.allowPets == 1 || apartment.noSharing == 1 || apartment.nearGroceries == 1 || apartment.hasParkingLot == 1 || apartment.hasWifi == 1 || apartment.hasTv == 1 || apartment.bedrooms != 0 || apartment.kitchen == 1 || apartment.security == 1) { %>
+                <h5 style="margin-bottom: 20px;">Tiện ích</h5>
+                <div class="row">
+                    <% if (apartment.allowPets == 1) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-paw" style="margin-right: 15px;"></i> Cho phép nuôi thú</p>
+                    </div>
+                    <% } %>
+                    <% if (apartment.noSharing == 1) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-home" style="margin-right: 15px;"></i>Không chung chủ</p>
+                    </div>
+                    <% } %>
+                    <% if (apartment.nearGroceries == 1) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-shopping-cart" style="margin-right: 15px;"></i>Gần siêu thị</p>
+                    </div>
+                    <% } %>
+                    <% if (apartment.hasParkingLot == 1) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-car" style="margin-right: 15px;"></i>Có chỗ gửi ô tô</p>
+                    </div>
+                    <% } %>
+                    <% if (apartment.hasWifi == 1) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-wifi" style="margin-right: 15px;"></i>Có wifi</p>
+                    </div>
+                    <% } %>
+                    <% if (apartment.hasTv == 1) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-tv" style="margin-right: 15px;"></i>Có TV</p>
+                    </div>
+                    <% } %>
+                    <% if (apartment.kitchen == 1) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-cutlery" style="margin-right: 15px;"></i>Có nhà bếp</p>
+                    </div>
+                    <% } %>
+                    <% if (apartment.bedrooms != 0) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-bed" style="margin-right: 15px;"></i>Có <%=apartment.bedrooms%> phòng ngủ</p>
+                    </div>
+                    <% } %>
+                    <% if (apartment.security == 1) { %>
+                    <div class="col-12 col-sm-6">
+                        <p><i class="fa fa-lock" style="margin-right: 15px;"></i>Có bảo vệ</p>
+                    </div>
+                    <% } %>
+                </div>
+                <% } %>
+                <button type="submit" class="btn btn-primary" style="background-color:#E22357">Đặt trước</button>
+            </div>
+            <div class="col-12 col-sm-12" style="margin-top: 50px;">
+                <h5 style="margin-bottom: 20px;">Vị trí</h5>
+                <div id="map" style="width: 100%; height: 300px; margin-bottom: 20px;"></div>
+                <div class="hor-flex" style="margin-bottom: 20px; align-items: center;">
+                    <h5>Đánh giá</h5>
+                    <% if (typeof currentUser !== 'undefined') { %>
+                    <a id="addReviewLink" data-toggle="modal" data-target="#reviewModal" class="edit-link" href="#"
+                        style="margin-left: 20px;">Thêm đánh giá</a>
+                    <% } %>
+                </div>
+                <% if (!reviews[0]) { %>
+                <p>Chưa có đánh giá.</p>
+                <% } else { %>
+                <ul class="list-group">
+                    <% reviews.forEach((review) => { %>
+                    <li class="list-group-item"><%- include('../partials/reviewItem', { review }) %></li>
+                    <hr class="my-1 apt-line-10">
+                    <% })%>
+                </ul>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/reviewModal') %>
+
+    <%- include('../partials/footer'); -%>
+    <script>
+        function initMap() {
+            var lng;
+            var lat;
+            var string = document.getElementById("apartmentLocation").innerHTML;
+            console.log(encodeURI(string));
+            $.ajax({
+                url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(string)}&key=AIzaSyCLPdkZYJuLJfDoxSeMVJZ2o7bsHCiIZuI`,
+                method: 'get',
+                success: function (res) {
+                    lng = res.results[0].geometry.location.lng;
+                    lat = res.results[0].geometry.location.lat;
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: { lat, lng },
+                        zoom: 15
+                    });
+                    var marker = new google.maps.Marker({
+                        position: { lat, lng },
+                        map
+                    });
+                },
+                error: function (xhr) {
+                }
+            });
+        }
+        $("#reviewForm").submit(function (e) {
+            $.ajax({
+                url: '/api/v1/apartments/<%= apartment.id %>/reviews',
+                type: 'post',
+                data: {
+                    content: $("#reviewContent").val(),
+                    apartmentId: "<%= apartment.id %>"
+                },
+                beforeSend: function () {
+                    $("#reviewLoader").removeClass("hidden");
+                },
+                success: function (res) {
+                    $("#reviewLoader").addClass("hidden");
+                    $("#reviewModal").modal('hide');
+                    window.location.reload();
+                },
+                error: function (xhr) {
+                    $("#reviewLoader").addClass("hidden");
+                }
+            });
+        });
+        $("#apartmentBookmark").on("click", function (e) {
+            e.preventDefault();
+            var status = $("#apartmentBookmark i").attr("class");
+            if (status == "fa fa-bookmark-o") {
+                $("#apartmentBookmark i").attr("class", "fa fa-bookmark");
+            } else {
+                $("#apartmentBookmark i").attr("class", "fa fa-bookmark-o");
+            }
+            $.ajax({
+                url: '/api/v1/users/apartments/save',
+                type: 'post',
+                data: {
+                    apartmentId: "<%= apartment.id %>"
+                },
+                success: function (res) {
+                },
+                error: function (xhr) {
+                }
+            });
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLPdkZYJuLJfDoxSeMVJZ2o7bsHCiIZuI&callback=initMap"
+        async defer></script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); -%>
+</head>
+
+<body>
+    <%- include('../partials/header'); -%>
+
+    <div id="searchResults" class="container hidden" style="margin-top: 50px;">
+        <h5 id="resultCount"></h5>
+        <ul id="resultList" class="list-group">
+        </ul>
+    </div>
+    <div id="resultLoader" class="hidden" style="display: flex; align-items: center; justify-content: center; padding: 200px;">
+        <div class="loader" style="width: 100px; height: 100px;">
+        </div>
+    </div>
+
+    </div>
+    <%- include('../partials/footer'); -%>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: `/api/v1/apartments?keyword=<%=keyword%>&limit=<%=limit%>&page=<%=page%>`,
+                type: 'get',
+                beforeSend: function () {
+                    $("#resultLoader").removeClass("hidden");
+                    $("#searchResults").addClass("hidden");
+                },
+                success: function (res) {
+                    console.log(res.data.apartments);
+                    $("#resultCount").append(`Có ${res.data.count} kết quả tìm kiếm`);
+                    res.data.apartments.forEach(apartment => {
+                        $("#resultList").append(`
+                            <li class="list-group-item">
+                                <a href="/apartments/${apartment.id}">
+                                    <div class="card apt-hor-card">
+                                        <img class="apt-hor-img" src="${apartment.picture ? apartment.picture : '/images/default-picture.png'}" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${apartment.name}</h5>
+                                            <p class="card-text">${apartment.location}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <hr class="my-1 apt-line-10">
+                        `);
+                    });
+                    $("#resultLoader").addClass("hidden");
+                    $("#searchResults").removeClass("hidden");
+                },
+                error: function (xhr) {
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
